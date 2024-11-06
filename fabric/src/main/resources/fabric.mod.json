@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "vintage_animations",
+  "version": "${version}",
+  "name": "Vintage Animations",
+  "description": "Overhaul Animations of Basic Actions",
+  "authors": [
+    "thrasos"
+  ],
+  "contributors": [
+    "Pixel Dream Studios"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/vintage-animations",
+    "sources": "https://github.com/thrasosc/vintage-animations-mod",
+    "issues": "https://github.com/thrasosc/vintage-animations-mod/issues"
+  },
+  "license": "GPL-3.0",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.pixeldreamstudios.vintage_animations.fabric.client.VintageAnimationsFabricClient"
+    ],
+    "modmenu": [
+      "net.pixeldreamstudios.vintage_animations.fabric.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "vintage_animations.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "architectury": ">=9.2.14",
+    "fabric-api": "*",
+    "player-animator": ">=1.0.2-rc1+1.20",
+    "cloth-config": ">=11.1.136"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.com/invite/pixel-dream-studios-872788557553610802"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+issueTrackerURL = "https://github.com/thrasosc/vintage-animations-mod/issues"
+license = "GNU GPL 3.0"
+
+[[mods]]
+modId = "vintage_animations"
+version = "${version}"
+displayName = "Vintage Animations"
+authors = "thrasos"
+credits = "Pixel Dream Studios"
+displayURL="https://modrinth.com/mod/vintage-animations"
+description = '''
+Overhaul Animations of Basic Actions
+'''
+logoFile = "icon.png"
+
+[[dependencies.vintage_animations]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.vintage_animations]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.vintage_animations]]
+modId = "player-animator"
+mandatory = true
+versionRange = "[1.0.2-rc1+1.20,)"
+ordering = "NONE"
+side = "BOTH"

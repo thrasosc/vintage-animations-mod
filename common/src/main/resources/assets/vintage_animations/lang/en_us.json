@@ -1,0 +1,7 @@
+{
+  "text.autoconfig.vintage_animations.title": "Vintage Animations",
+  "text.autoconfig.vintage_animations.option.showArmsInFirstPerson": "Display Arms in First Person",
+  "text.autoconfig.vintage_animations.option.showArmsInFirstPerson.@Tooltip": "Render the player's arms during animations in first-person view",
+  "text.autoconfig.vintage_animations.option.showOffHandInFirstPerson": "Display Off-Hand in First Person",
+  "text.autoconfig.vintage_animations.option.showOffHandInFirstPerson.@Tooltip": "Render the player's off-hand during animations in first-person view"
+}
