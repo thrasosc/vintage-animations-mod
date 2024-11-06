@@ -51,9 +51,12 @@ public class LivingEntityMixin {
 
     @Inject(method = "Lnet/minecraft/world/entity/LivingEntity;getAttackAnim(F)F", at = @At("HEAD"), cancellable = true)
     private void cancelAttackAnim(float f, CallbackInfoReturnable<Float> cir) {
-        if (animationContainer != null) {
-            if (animationContainer.getAnimation().isActive()) {
-                cir.setReturnValue(0.0f);
+        LivingEntity player = (LivingEntity) (Object) this;
+        if (player.level().isClientSide()) {
+            if (animationContainer != null) {
+                if (animationContainer.getAnimation().isActive()) {
+                    cir.setReturnValue(0.0f);
+                }
             }
         }
     }
@@ -61,9 +64,11 @@ public class LivingEntityMixin {
     @Inject(method = "tick", at = @At("RETURN"))
     private void incrCtr(CallbackInfo ci) {
         LivingEntity player = (LivingEntity) (Object) this;
-        if (player.level().isClientSide()) ctr++;
-        //don't let ctr get too big
-        if (ctr >= 10000) ctr = 0;
+        if (player.level().isClientSide()) {
+            ctr++;
+            //don't let ctr get too big
+            if (ctr >= 10000) ctr = 0;
+        }
     }
 
     private void playAnim(LivingEntity player, String animName) {
