@@ -30,8 +30,22 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.vintage_animations]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.2.14,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.vintage_animations]]
 modId = "playeranimator"
 mandatory = true
 versionRange = "[1.0.2-rc1+1.20,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.vintage_animations]]
+modId = "cloth_config"
+mandatory = true
+versionRange = "[11.1.136,)"
 ordering = "NONE"
 side = "BOTH"
