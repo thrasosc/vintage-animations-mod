@@ -38,7 +38,7 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
 
     // Architectury API. This is optional, and you can comment it out if you don't need it.
-    modImplementation "dev.architectury:architectury-fabric:${rootProject.architectury_api_version}"
+    modImplementation "dev.architectury:architectury-forge:${rootProject.architectury_api_version}"
     implementation "dev.kosmx.player-anim:player-animation-lib-forge:${rootProject.player_anim_version}"
     modApi "me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}"
 }

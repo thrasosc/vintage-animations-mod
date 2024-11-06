@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'vintage_animations'
+rootProject.name = 'Vintage Animations'
 
 include 'common'
 include 'fabric'
