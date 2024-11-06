@@ -1,6 +1,5 @@
 package net.pixeldreamstudios.vintage_animations.mixin;
 
-
 import dev.architectury.platform.Platform;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonConfiguration;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
