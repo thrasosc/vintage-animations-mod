@@ -80,15 +80,17 @@ public class LivingEntityMixin {
                         true,
                         VintageAnimations.config.showOffHandInFirstPerson
                 ));
-
-        //check for First Person Model compatibility
-        animPlayer = Platform.isModLoaded("firstperson") ? animPlayer.setFirstPersonMode(FirstPersonMode.DISABLED) : animPlayer.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
-
+        compatCheck(animPlayer);
         animationContainer = ((IAnimatedPlayer) player).vintage_animations_getModAnimation();
-
         if (ctr >= anim.endTick) {
             animationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTEXPO), animPlayer, true);
             ctr = 0;
         }
+    }
+
+    private void compatCheck(KeyframeAnimationPlayer animPlayer) {
+        animPlayer = Platform.isModLoaded("firstperson") || Platform.isModLoaded("realcamera")
+                ? animPlayer.setFirstPersonMode(FirstPersonMode.DISABLED)
+                : animPlayer.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
     }
 }
