@@ -1,8 +1,8 @@
 # Vintage Animations
 
-## [1.1.0] - 08/11/2024
+## [1.2.0] - 09/11/2024
 
-- update mod icon
-- add realcamera compat
+- fix mod icon
+- add config options for playing animations
 
 [![](https://i.imgur.com/l815YIN.png)](https://bisecthosting.com/PixelDream)
