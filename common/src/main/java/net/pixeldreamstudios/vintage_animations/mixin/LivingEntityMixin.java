@@ -35,13 +35,13 @@ public class LivingEntityMixin {
         if (player instanceof Player) {
             if (player.level().isClientSide()) {
                 ItemStack itemStack = player.getItemInHand(interactionHand);
-                if (itemStack.is(ItemTags.AXES)) {
+                if (itemStack.is(ItemTags.AXES) && VintageAnimations.config.chopAnimation) {
                     playAnim(player, "chop");
-                } else if (itemStack.is(ItemTags.PICKAXES)) {
+                } else if (itemStack.is(ItemTags.PICKAXES) && VintageAnimations.config.pickAnimation) {
                     playAnim(player, "pick");
-                } else if (itemStack.is(ItemTags.SHOVELS)) {
+                } else if (itemStack.is(ItemTags.SHOVELS) && VintageAnimations.config.digAnimation) {
                     playAnim(player, "dig");
-                } else if (itemStack.is(ItemTags.HOES)) {
+                } else if (itemStack.is(ItemTags.HOES) && VintageAnimations.config.tillAnimation) {
                     playAnim(player, "till");
                 }
             }
