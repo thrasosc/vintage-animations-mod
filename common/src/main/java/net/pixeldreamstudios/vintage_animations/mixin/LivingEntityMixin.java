@@ -7,14 +7,11 @@ import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
-import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
@@ -42,26 +39,21 @@ public class LivingEntityMixin {
         leftHandedMainHand = Minecraft.getInstance().options.mainHand().get().equals(HumanoidArm.LEFT);
     }
 
-    @Inject(method = "Lnet/minecraft/world/entity/LivingEntity;swing(Lnet/minecraft/world/InteractionHand;Z)V", at = @At("HEAD"))
-    private void playAnimation(InteractionHand interactionHand, boolean bl,  CallbackInfo ci) {
+    @Inject(method = "swing(Lnet/minecraft/world/InteractionHand;)V", at = @At("HEAD"))
+    private void playAnimation(InteractionHand interactionHand,  CallbackInfo ci) {
         LivingEntity player = (LivingEntity) (Object) this;
         if (player instanceof Player) {
             if (player.level().isClientSide()) {
                 ItemStack itemStack = player.getItemInHand(interactionHand);
-                if (itemStack.is(ItemTags.AXES) && VintageAnimations.config.chopAnimation) {
-                    playAnim(player, "chop");
-                } else if (itemStack.is(ItemTags.PICKAXES) && VintageAnimations.config.pickAnimation) {
-                    playAnim(player, "pick");
-                } else if (itemStack.is(ItemTags.SHOVELS) && VintageAnimations.config.digAnimation) {
-                    playAnim(player, "dig");
-                } else if (itemStack.is(ItemTags.HOES) && VintageAnimations.config.tillAnimation) {
-                    playAnim(player, "till");
-                }
+                if (itemStack.is(ItemTags.AXES) && VintageAnimations.config.chopAnimation) playAnim(player, "chop");
+                else if (itemStack.is(ItemTags.PICKAXES) && VintageAnimations.config.pickAnimation) playAnim(player, "pick");
+                else if (itemStack.is(ItemTags.SHOVELS) && VintageAnimations.config.digAnimation) playAnim(player, "dig");
+                else if (itemStack.is(ItemTags.HOES) && VintageAnimations.config.tillAnimation) playAnim(player, "till");
             }
         }
     }
 
-    @Inject(method = "Lnet/minecraft/world/entity/LivingEntity;getAttackAnim(F)F", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "getAttackAnim", at = @At("RETURN"), cancellable = true)
     private void cancelVanillaAttackAnim(float f, CallbackInfoReturnable<Float> cir) {
         LivingEntity player = (LivingEntity) (Object) this;
         if (player instanceof Player)
@@ -103,8 +95,10 @@ public class LivingEntityMixin {
     }
 
     private void compatCheck(KeyframeAnimationPlayer animPlayer) {
-        animPlayer = Platform.isModLoaded("firstperson") || Platform.isModLoaded("realcamera")
-                ? animPlayer.setFirstPersonMode(FirstPersonMode.DISABLED)
-                : animPlayer.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
+        if (Platform.isModLoaded("firstperson") || Platform.isModLoaded("realcamera")) {
+            animPlayer.setFirstPersonMode(FirstPersonMode.DISABLED);
+        } else {
+            animPlayer.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
+        }
     }
 }
