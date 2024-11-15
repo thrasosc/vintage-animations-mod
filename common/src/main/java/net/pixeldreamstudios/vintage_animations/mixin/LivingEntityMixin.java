@@ -75,10 +75,12 @@ public class LivingEntityMixin {
     @Inject(method = "tick", at = @At("RETURN"))
     private void incrCtr(CallbackInfo ci) {
         LivingEntity player = (LivingEntity) (Object) this;
-        if (player.level().isClientSide()) {
-            ctr++;
-            //don't let ctr get too big
-            if (ctr >= 10000) ctr = 0;
+        if (player instanceof Player) {
+            if (player.level().isClientSide()) {
+                ctr++;
+                //don't let ctr get too big
+                if (ctr >= 10000) ctr = 0;
+            }
         }
     }
 
