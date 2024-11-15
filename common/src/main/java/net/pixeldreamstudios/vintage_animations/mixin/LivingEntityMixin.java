@@ -64,13 +64,11 @@ public class LivingEntityMixin {
     @Inject(method = "Lnet/minecraft/world/entity/LivingEntity;getAttackAnim(F)F", at = @At("HEAD"), cancellable = true)
     private void cancelVanillaAttackAnim(float f, CallbackInfoReturnable<Float> cir) {
         LivingEntity player = (LivingEntity) (Object) this;
-        if (player.level().isClientSide()) {
-            if (animationContainer != null) {
-                if (animationContainer.getAnimation().isActive()) {
-                    cir.setReturnValue(0.0f);
-                }
-            }
-        }
+        if (player.level().isClientSide())
+            if (animationContainer != null)
+                if (animationContainer.getAnimation() != null)
+                    if (animationContainer.getAnimation().isActive())
+                        cir.setReturnValue(0.0f);
     }
 
     @Inject(method = "tick", at = @At("RETURN"))
