@@ -7,15 +7,22 @@ import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
+import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.pixeldreamstudios.vintage_animations.IAnimatedPlayer;
 import net.pixeldreamstudios.vintage_animations.VintageAnimations;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,6 +35,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class LivingEntityMixin {
     private ModifierLayer<IAnimation> animationContainer;
     private int ctr = 0;
+    private boolean leftHandedMainHand;
+
+    @Inject(method = "<init>*", at = @At("RETURN"))
+    private void LivingEntity(EntityType<? extends LivingEntity> entityType, Level level, CallbackInfo ci) {
+        leftHandedMainHand = Minecraft.getInstance().options.mainHand().get().equals(HumanoidArm.LEFT);
+    }
 
     @Inject(method = "Lnet/minecraft/world/entity/LivingEntity;swing(Lnet/minecraft/world/InteractionHand;Z)V", at = @At("HEAD"))
     private void playAnimation(InteractionHand interactionHand, boolean bl,  CallbackInfo ci) {
@@ -72,7 +85,6 @@ public class LivingEntityMixin {
 
     private void playAnim(LivingEntity player, String animName) {
         KeyframeAnimation anim = PlayerAnimationRegistry.getAnimation(new ResourceLocation(VintageAnimations.MOD_ID, animName));
-
         KeyframeAnimationPlayer animPlayer = new KeyframeAnimationPlayer(anim)
                 .setFirstPersonConfiguration(new FirstPersonConfiguration(
                         VintageAnimations.config.showArmsInFirstPerson,
@@ -83,6 +95,7 @@ public class LivingEntityMixin {
         compatCheck(animPlayer);
         animationContainer = ((IAnimatedPlayer) player).vintage_animations_getModAnimation();
         if (ctr >= anim.endTick) {
+//            animationContainer.addModifierLast(new MirrorModifier(leftHandedMainHand));
             animationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTEXPO), animPlayer, true);
             ctr = 0;
         }
