@@ -1,7 +1,7 @@
 # Vintage Animations
 
-## [1.2.3] - 16/11/2024
+## [1.2.4] - 16/11/2024
 
-- fix first person model mod support
+- fix translations
 
 [![](https://i.imgur.com/l815YIN.png)](https://bisecthosting.com/PixelDream)
