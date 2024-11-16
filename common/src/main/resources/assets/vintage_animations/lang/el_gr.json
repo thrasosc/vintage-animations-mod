@@ -1,0 +1,17 @@
+{
+  "text.autoconfig.vintage_animations.title": "Vintage Animations",
+  "text.autoconfig.vintage_animations.category.animations": "Κινήσεις",
+  "text.autoconfig.vintage_animations.category.miscellaneous": "Διάφορα",
+  "text.autoconfig.vintage_animations.option.chopAnimation": "Κίνηση Κοψίματος",
+  "text.autoconfig.vintage_animations.option.chopAnimation.@Tooltip": "Αναπαραγωγή της κίνησης κοψίματος όταν κόβετε με τσεκούρι",
+  "text.autoconfig.vintage_animations.option.pickAnimation": "Κίνηση Λαξίματος",
+  "text.autoconfig.vintage_animations.option.pickAnimation.@Tooltip": "Αναπαραγωγή της κίνησης λαξίματος όταν λαξεύετε με κασμά",
+  "text.autoconfig.vintage_animations.option.digAnimation": "Κίνηση Σκαψίματος",
+  "text.autoconfig.vintage_animations.option.digAnimation.@Tooltip": "Αναπαραγωγή της κίνησης σκαψίματος όταν σκάβετε με φτυάρι",
+  "text.autoconfig.vintage_animations.option.tillAnimation": "Κίνηση Καλλιέργειας",
+  "text.autoconfig.vintage_animations.option.tillAnimation.@Tooltip": "Αναπαραγωγή της κίνησης καλλιέργειας όταν καλλιεργείτε με τσουγκράνα",
+  "text.autoconfig.vintage_animations.option.showArmsInFirstPerson": "Εμφάνιση Χεριών σε Πρώτο Πρόσωπο",
+  "text.autoconfig.vintage_animations.option.showArmsInFirstPerson.@Tooltip": "Απεικόνιση των χεριών του παίκτη κατά τη διάρκεια κινήσεων σε προβολή πρώτου προσώπου",
+  "text.autoconfig.vintage_animations.option.showOffHandInFirstPerson": "Εμφάνιση Δευτερεύοντος Χεριού σε Πρώτο Πρόσωπο",
+  "text.autoconfig.vintage_animations.option.showOffHandInFirstPerson.@Tooltip": "Απεικόνιση του δευτερεύοντος χεριού του παίκτη κατά τη διάρκεια κινήσεων σε προβολή πρώτου προσώπου"
+}
