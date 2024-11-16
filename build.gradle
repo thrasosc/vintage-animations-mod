@@ -28,6 +28,7 @@ subprojects {
     repositories {
         maven { url 'https://maven.kosmx.dev/' }
         maven { url "https://maven.terraformersmc.com/releases/" }
+        maven { url "https://api.modrinth.com/maven" }
     }
 
     dependencies {

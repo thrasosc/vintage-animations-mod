@@ -11,6 +11,8 @@ import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Ease;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
+import dev.tr7zw.firstperson.FirstPersonModelCore;
+import dev.tr7zw.firstperson.FirstPersonModelMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -80,8 +82,7 @@ public class LivingEntityMixin {
                         vintageAnimations$animationContainer.addModifier(new MirrorModifier(true), 0);
                         vintageAnimations$switchedMainHandLeft = true;
                         vintageAnimations$switchedMainHandRight = false;
-                    }
-                    else if (!vintageAnimations$mainHandLeft && !vintageAnimations$switchedMainHandRight) {
+                    } else if (!vintageAnimations$mainHandLeft && !vintageAnimations$switchedMainHandRight) {
                         vintageAnimations$animationContainer.removeModifier(0);
                         vintageAnimations$switchedMainHandRight = true;
                         vintageAnimations$switchedMainHandLeft = false;
@@ -103,6 +104,7 @@ public class LivingEntityMixin {
                         true,
                         VintageAnimations.config.showOffHandInFirstPerson
                 ));
+        animPlayer.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
         compatCheck(animPlayer);
         vintageAnimations$animationContainer = ((IAnimatedPlayer) player).vintage_animations_getModAnimation();
         if (vintageAnimations$ctr >= anim.endTick) {
@@ -112,10 +114,14 @@ public class LivingEntityMixin {
     }
 
     private void compatCheck(KeyframeAnimationPlayer animPlayer) {
-        if (Platform.isModLoaded("firstperson") || Platform.isModLoaded("realcamera")) {
+
+        if (Platform.isModLoaded("firstperson")) {
+            if (FirstPersonModelCore.instance.getConfig().enabledByDefault)
+                animPlayer.setFirstPersonMode(FirstPersonMode.NONE);
+            else animPlayer.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
+        }
+        if (Platform.isModLoaded("realcamera")) {
             animPlayer.setFirstPersonMode(FirstPersonMode.DISABLED);
-        } else {
-            animPlayer.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
         }
     }
 }

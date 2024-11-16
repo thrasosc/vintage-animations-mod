@@ -41,6 +41,9 @@ dependencies {
     modImplementation "dev.architectury:architectury-forge:${rootProject.architectury_api_version}"
     modImplementation "dev.kosmx.player-anim:player-animation-lib-forge:${rootProject.player_anim_version}"
     modApi "me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}"
+
+    // For compatibility support
+    modImplementation "maven.modrinth:first-person-model:${project.first_person_model_forge_version}"
 }
 
 processResources {
