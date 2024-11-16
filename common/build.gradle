@@ -14,5 +14,5 @@ dependencies {
     modApi "me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}"
 
     // For compatibility support
-    modImplementation "maven.modrinth:first-person-model:${project.first_person_model_fabric_version}"
+    modCompileOnly "maven.modrinth:first-person-model:${project.first_person_model_fabric_version}"
 }

@@ -42,7 +42,7 @@ dependencies {
     modApi "com.terraformersmc:modmenu:${rootProject.modmenu_version}"
 
     // For compatibility support
-    modImplementation "maven.modrinth:first-person-model:${project.first_person_model_fabric_version}"
+    modCompileOnly "maven.modrinth:first-person-model:${project.first_person_model_fabric_version}"
 }
 
 processResources {
