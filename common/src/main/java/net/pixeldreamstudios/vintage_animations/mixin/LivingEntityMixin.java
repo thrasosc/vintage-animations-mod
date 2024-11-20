@@ -38,7 +38,7 @@ public class LivingEntityMixin {
     @Unique
     private boolean vintageAnimations$switchedMainHandLeft = false;
     @Unique
-    private boolean vintageAnimations$switchedMainHandRight = false;
+    private boolean vintageAnimations$switchedMainHandRight = true;
 
     @Inject(method = "swing(Lnet/minecraft/world/InteractionHand;)V", at = @At("HEAD"))
     private void playAnimation(InteractionHand interactionHand, CallbackInfo ci) {
