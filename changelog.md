@@ -1,8 +1,9 @@
 # Vintage Animations
 
-## [1.2.5] - 16/11/2024
+## [1.3.0] - 21/11/2024
 
-- use AutoConfig screen for the config screen in Forge
-- add Greek translation
+- overhaul animations
+- update mod icon
+- try fix index crash
 
-[![](https://i.imgur.com/l815YIN.png)](https://bisecthosting.com/PixelDream)
+[![BisectHosting](https://www.bisecthosting.com/images/CF/Vintage_Animations/MP_VintageAnimations_promo.webp)](https://bisecthosting.com/PixelDream)
