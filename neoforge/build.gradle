@@ -63,8 +63,8 @@ remapJar {
 unifiedPublishing {
     project {
         displayName = "Vintage Animations $project.version"
-        gameVersions = ["1.20.1"]
-        gameLoaders = ["fabric"]
+        gameVersions = ["1.21.1"]
+        gameLoaders = ["neoforge"]
         releaseType = "release" // Optional, use "release", "beta" or "alpha"
         changelog = rootProject.file("changelog.md").text
 
