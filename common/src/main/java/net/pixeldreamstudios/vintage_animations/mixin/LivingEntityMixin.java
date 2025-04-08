@@ -31,91 +31,96 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
-    @Unique
-    private ModifierLayer<IAnimation> vintageAnimations$animationContainer;
-    @Unique
-    private int vintageAnimations$ctr = 0;
-    @Unique
-    private boolean vintageAnimations$switchedMainHandLeft = false;
-    @Unique
-    private boolean vintageAnimations$switchedMainHandRight = true;
+  @Unique private ModifierLayer<IAnimation> vintageAnimations$animationContainer;
+  @Unique private int vintageAnimations$ctr = 0;
+  @Unique private boolean vintageAnimations$switchedMainHandLeft = false;
+  @Unique private boolean vintageAnimations$switchedMainHandRight = true;
 
-    @Inject(method = "swing(Lnet/minecraft/world/InteractionHand;)V", at = @At("HEAD"))
-    private void playAnimation(InteractionHand interactionHand, CallbackInfo ci) {
-        LivingEntity player = (LivingEntity) (Object) this;
-        if (player instanceof Player) {
-            if (player.level().isClientSide()) {
-                ItemStack itemStack = player.getItemInHand(interactionHand);
-                if (itemStack.is(ItemTags.AXES) && VintageAnimations.config.chopAnimation) playAnim(player, "chop");
-                else if (itemStack.is(ItemTags.PICKAXES) && VintageAnimations.config.pickAnimation)
-                    playAnim(player, "pick");
-                else if (itemStack.is(ItemTags.SHOVELS) && VintageAnimations.config.digAnimation)
-                    playAnim(player, "dig");
-                else if (itemStack.is(ItemTags.HOES) && VintageAnimations.config.tillAnimation)
-                    playAnim(player, "till");
-            }
-        }
+  @Inject(method = "swing(Lnet/minecraft/world/InteractionHand;)V", at = @At("HEAD"))
+  private void playAnimation(InteractionHand interactionHand, CallbackInfo ci) {
+    LivingEntity player = (LivingEntity) (Object) this;
+    if (player instanceof Player) {
+      if (player.level().isClientSide()) {
+        ItemStack itemStack = player.getItemInHand(interactionHand);
+        if (itemStack.is(ItemTags.AXES) && VintageAnimations.config.chopAnimation)
+          playAnim(player, "chop");
+        else if (itemStack.is(ItemTags.PICKAXES) && VintageAnimations.config.pickAnimation)
+          playAnim(player, "pick");
+        else if (itemStack.is(ItemTags.SHOVELS) && VintageAnimations.config.digAnimation)
+          playAnim(player, "dig");
+        else if (itemStack.is(ItemTags.HOES) && VintageAnimations.config.tillAnimation)
+          playAnim(player, "till");
+      }
     }
+  }
 
-    @Inject(method = "getAttackAnim", at = @At("RETURN"), cancellable = true)
-    private void cancelVanillaAttackAnim(float f, CallbackInfoReturnable<Float> cir) {
-        LivingEntity player = (LivingEntity) (Object) this;
-        if (player instanceof Player)
-            if (player.level().isClientSide())
-                if (vintageAnimations$animationContainer != null)
-                    if (vintageAnimations$animationContainer.getAnimation() != null)
-                        if (vintageAnimations$animationContainer.getAnimation().isActive())
-                            cir.setReturnValue(0.0f);
-    }
+  @Inject(method = "getAttackAnim", at = @At("RETURN"), cancellable = true)
+  private void cancelVanillaAttackAnim(float f, CallbackInfoReturnable<Float> cir) {
+    LivingEntity player = (LivingEntity) (Object) this;
+    if (player instanceof Player)
+      if (player.level().isClientSide())
+        if (vintageAnimations$animationContainer != null)
+          if (vintageAnimations$animationContainer.getAnimation() != null)
+            if (vintageAnimations$animationContainer.getAnimation().isActive())
+              cir.setReturnValue(0.0f);
+  }
 
-    @Inject(method = "tick", at = @At("RETURN"))
-    private void incrCtr(CallbackInfo ci) {
-        LivingEntity player = (LivingEntity) (Object) this;
-        if (player instanceof Player) {
-            if (player.level().isClientSide()) {
-                if (vintageAnimations$animationContainer != null) {
-                    boolean vintageAnimations$mainHandLeft = Minecraft.getInstance().options.mainHand().get().equals(HumanoidArm.LEFT);
-                    if (vintageAnimations$mainHandLeft && !vintageAnimations$switchedMainHandLeft) {
-                        vintageAnimations$animationContainer.addModifier(new MirrorModifier(true), 0);
-                        vintageAnimations$switchedMainHandLeft = true;
-                        vintageAnimations$switchedMainHandRight = false;
-                    } else if (!vintageAnimations$mainHandLeft && !vintageAnimations$switchedMainHandRight) {
-                        vintageAnimations$animationContainer.removeModifier(0);
-                        vintageAnimations$switchedMainHandRight = true;
-                        vintageAnimations$switchedMainHandLeft = false;
-                    }
-                }
-                vintageAnimations$ctr++;
-                // don't let it get too big
-                if (vintageAnimations$ctr >= 10000) vintageAnimations$ctr = 0;
-            }
+  @Inject(method = "tick", at = @At("RETURN"))
+  private void incrCtr(CallbackInfo ci) {
+    LivingEntity player = (LivingEntity) (Object) this;
+    if (player instanceof Player) {
+      if (player.level().isClientSide()) {
+        if (vintageAnimations$animationContainer != null) {
+          boolean vintageAnimations$mainHandLeft =
+              Minecraft.getInstance().options.mainHand().get().equals(HumanoidArm.LEFT);
+          if (vintageAnimations$mainHandLeft && !vintageAnimations$switchedMainHandLeft) {
+            vintageAnimations$animationContainer.addModifier(new MirrorModifier(true), 0);
+            vintageAnimations$switchedMainHandLeft = true;
+            vintageAnimations$switchedMainHandRight = false;
+          } else if (!vintageAnimations$mainHandLeft && !vintageAnimations$switchedMainHandRight) {
+            vintageAnimations$animationContainer.removeModifier(0);
+            vintageAnimations$switchedMainHandRight = true;
+            vintageAnimations$switchedMainHandLeft = false;
+          }
         }
+        vintageAnimations$ctr++;
+        // don't let it get too big
+        if (vintageAnimations$ctr >= 10000) vintageAnimations$ctr = 0;
+      }
     }
+  }
 
-    private void playAnim(LivingEntity player, String animName) {
-        KeyframeAnimation anim = PlayerAnimationRegistry.getAnimation(new ResourceLocation(VintageAnimations.MOD_ID, animName));
-        KeyframeAnimationPlayer animPlayer = new KeyframeAnimationPlayer(anim)
-                .setFirstPersonConfiguration(new FirstPersonConfiguration(
-                        VintageAnimations.config.showArmsInFirstPerson,
-                        VintageAnimations.config.showArmsInFirstPerson && VintageAnimations.config.showOffHandInFirstPerson,
-                        true,
-                        VintageAnimations.config.showOffHandInFirstPerson
-                ));
-        animPlayer.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
-        compatCheck(animPlayer);
-        vintageAnimations$animationContainer = ((IAnimatedPlayer) player).vintage_animations_getModAnimation();
-        if (vintageAnimations$ctr >= anim.endTick) {
-            vintageAnimations$animationContainer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(5, Ease.INOUTEXPO), animPlayer, true);
-            vintageAnimations$ctr = 0;
-        }
+  private void playAnim(LivingEntity player, String animName) {
+    KeyframeAnimation anim =
+        (KeyframeAnimation)
+            PlayerAnimationRegistry.getAnimation(
+                ResourceLocation.fromNamespaceAndPath(VintageAnimations.MOD_ID, animName));
+    KeyframeAnimationPlayer animPlayer =
+        new KeyframeAnimationPlayer(anim)
+            .setFirstPersonConfiguration(
+                new FirstPersonConfiguration(
+                    VintageAnimations.config.showArmsInFirstPerson,
+                    VintageAnimations.config.showArmsInFirstPerson
+                        && VintageAnimations.config.showOffHandInFirstPerson,
+                    true,
+                    VintageAnimations.config.showOffHandInFirstPerson));
+    animPlayer.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
+    compatCheck(animPlayer);
+    vintageAnimations$animationContainer =
+        ((IAnimatedPlayer) player).vintage_animations_getModAnimation();
+    if (vintageAnimations$ctr >= anim.endTick) {
+      vintageAnimations$animationContainer.replaceAnimationWithFade(
+          AbstractFadeModifier.standardFadeIn(5, Ease.INOUTEXPO), animPlayer, true);
+      vintageAnimations$ctr = 0;
     }
+  }
 
-    private void compatCheck(KeyframeAnimationPlayer animPlayer) {
-        if (Platform.isModLoaded("firstperson")) {
-            new FirstPersonModelCompat(animPlayer);
-        }
-        if (Platform.isModLoaded("realcamera")) {
-            animPlayer.setFirstPersonMode(FirstPersonMode.DISABLED);
-        }
+  private void compatCheck(KeyframeAnimationPlayer animPlayer) {
+    if (Platform.isModLoaded("firstperson")) {
+      new FirstPersonModelCompat(animPlayer);
     }
+    if (Platform.isModLoaded("realcamera")) {
+      animPlayer.setFirstPersonMode(FirstPersonMode.DISABLED);
+    }
+  }
 }

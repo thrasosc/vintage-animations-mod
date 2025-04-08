@@ -6,8 +6,8 @@ import me.shedaniel.autoconfig.AutoConfig;
 import net.pixeldreamstudios.vintage_animations.VintageAnimConfig;
 
 public class ModMenuIntegration implements ModMenuApi {
-    @Override
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> AutoConfig.getConfigScreen(VintageAnimConfig.class, parent).get();
-    }
+  @Override
+  public ConfigScreenFactory<?> getModConfigScreenFactory() {
+    return parent -> AutoConfig.getConfigScreen(VintageAnimConfig.class, parent).get();
+  }
 }

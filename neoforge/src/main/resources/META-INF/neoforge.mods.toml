@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[47,)"
+loaderVersion = "[2,)"
 issueTrackerURL = "https://github.com/thrasosc/vintage-animations-mod/issues"
 license = "GNU GPL 3.0"
 
@@ -7,45 +7,48 @@ license = "GNU GPL 3.0"
 modId = "vintage_animations"
 version = "${version}"
 displayName = "Vintage Animations"
-authors = "thrasos"
+authors = "Thrasos"
 credits = "Pixel Dream Studios"
-displayURL="https://modrinth.com/mod/vintage-animations"
+displayURL = "https://modrinth.com/mod/vintage-animations"
 description = '''
 Overhaul Animations of Basic Actions
 '''
 logoFile = "icon.png"
 
 [[dependencies.vintage_animations]]
-modId = "forge"
-mandatory = true
-versionRange = "[47,)"
+modId = "neoforge"
+type = "required"
+versionRange = "[21,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.vintage_animations]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.20.1,)"
+type = "required"
+versionRange = "[1.21.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.vintage_animations]]
 modId = "architectury"
-mandatory = true
-versionRange = "[9.2.14,)"
+type = "required"
+versionRange = "[13.0.8,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.vintage_animations]]
 modId = "playeranimator"
-mandatory = true
-versionRange = "[1.0.2-rc1+1.20,)"
+type = "required"
+versionRange = "[2.0.1+1.21.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.vintage_animations]]
 modId = "cloth_config"
-mandatory = true
-versionRange = "[11.1.136,)"
+type = "required"
+versionRange = "[15.0.140,)"
 ordering = "NONE"
 side = "BOTH"
+
+[[mixins]]
+config = "vintage_animations.mixins.json"

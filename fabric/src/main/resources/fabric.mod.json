@@ -5,7 +5,7 @@
   "name": "Vintage Animations",
   "description": "Overhaul Animations of Basic Actions",
   "authors": [
-    "thrasos"
+    "Thrasos"
   ],
   "contributors": [
     "Pixel Dream Studios"
@@ -31,17 +31,17 @@
   ],
   "depends": {
     "fabricloader": ">=0.16.9",
-    "minecraft": "~1.20.1",
+    "minecraft": "~1.21.1",
     "java": ">=17",
-    "architectury": ">=9.2.14",
     "fabric-api": "*",
-    "player-animator": ">=1.0.2-rc1+1.20",
-    "cloth-config": ">=11.1.136"
+    "architectury": ">=13.0.8",
+    "player-animator": ">=2.0.1+1.21.1",
+    "cloth-config": ">=15.0.140"
   },
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.discord": "https://discord.com/invite/pixel-dream-studios-872788557553610802"
+        "modmenu.discord": "https://discord.pixeldreamstudios.net"
       }
     }
   }
