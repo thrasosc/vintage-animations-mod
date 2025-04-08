@@ -1,9 +1,7 @@
 # Vintage Animations
 
-## [1.3.0] - 21/11/2024
+## [1.3.0] - 08/04/2024
 
-- overhaul animations
-- update mod icon
-- try fix index crash
+- port to 1.21.1
 
 [![BisectHosting](https://www.bisecthosting.com/images/CF/Vintage_Animations/MP_VintageAnimations_promo.webp)](https://bisecthosting.com/PixelDream)
