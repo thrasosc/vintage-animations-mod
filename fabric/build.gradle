@@ -1,6 +1,6 @@
 plugins {
     id 'com.github.johnrengelman.shadow'
-    id 'me.shedaniel.unified-publishing'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
 architectury {
@@ -57,45 +57,33 @@ remapJar {
     input.set shadowJar.archiveFile
 }
 
-unifiedPublishing {
-    project {
-        displayName = "Vintage Animations $project.version"
-        gameVersions = ["1.21.1"]
-        gameLoaders = ["fabric"]
-        releaseType = "release" // Optional, use "release", "beta" or "alpha"
-        changelog = rootProject.file("changelog.md").text
+publishMods {
+    file = tasks.remapJar.archiveFile
+    displayName = "Vintage Animations $project.version"
+    version = project.version
+    changelog = rootProject.file("changelog.md").text
+    type = STABLE
+    modLoaders.add("fabric")
 
-        mainPublication tasks.remapJar // Declares the publicated jar
+    // ./gradlew publishMods -PpublishDryRun stages the upload under build/publishMods/
+    // instead of contacting CurseForge or Modrinth.
+    dryRun = providers.gradleProperty("publishDryRun").present
 
-        relations {
-            depends {
-                curseforge = "architectury-api"
-                modrinth = "architectury-api"
-            }
-            depends {
-                curseforge = "playeranimator"
-                modrinth = "playeranimator"
-            }
-            depends {
-                curseforge = "cloth-config"
-                modrinth = "cloth-config"
-            }
-        }
+    curseforge {
+        projectId = "1134994"
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        minecraftVersions.add("1.21.1")
+        // CurseForge rejects uploads with no environment tag (error 1021).
+        // This mod is "environment": "client".
+        client = true
+        server = false
+        requires("architectury-api", "playeranimator", "cloth-config")
+    }
 
-        var cfToken = System.getenv("CURSEFORGE_TOKEN")
-        if (cfToken != null) {
-            curseforge {
-                token = cfToken
-                id = "1134994" // Required, must be a string, ID of CurseForge project
-            }
-        }
-
-        var mrToken = System.getenv("MODRINTH_TOKEN")
-        if (mrToken != null) {
-            modrinth {
-                token = mrToken
-                id = "yY9ix3J0" // Required, must be a string, ID of Modrinth project
-            }
-        }
+    modrinth {
+        projectId = "yY9ix3J0"
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        minecraftVersions.add("1.21.1")
+        requires("architectury-api", "playeranimator", "cloth-config")
     }
 }
